@@ -18,12 +18,6 @@ const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
         <h1>Shavings</h1>
       </div>
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
-        {/* {cardTitles.map((numEntries, index) => (
-          <Card key={uuidv4()}>
-            <h2>{cardTitles[index]}</h2>
-            <h3>{cardSubtitle[index]}</h3>
-          </Card>
-        ))} */}
         {cards.map(({ id, title, subtitle }) => (
           <Card key={id}>
             <h2>{title}</h2>
@@ -39,7 +33,7 @@ export async function getServerSideProps() {
   function getRandom(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(1 * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   function calcRetirementValue(
@@ -53,7 +47,7 @@ export async function getServerSideProps() {
     return value;
   }
 
-  const numEntries: number = 22;
+  const numEntries: number = 12;
   const yearsToRetirement: number = 30;
 
   let dollars: number[] = [];
@@ -70,21 +64,20 @@ export async function getServerSideProps() {
     cents += getRandom(0, 30) * 100;
 
     dollars.push(cents / 100);
-    // console.log(companies);
-    const businessIndex: number = getRandom(0, companies.companies.length - 1);
+    const businessIndex: number = getRandom(0, numCompanies - 1);
     const business: string = companies.companies[businessIndex];
-    var title: string =
+    const title: string =
       "$" + (cents / 100).toString() + ' from purchase at "' + business + '"';
     cardTitles.push(title);
 
-    let compounded: number = calcRetirementValue(
+    const compounded: number = calcRetirementValue(
       cents / 100,
       yearsToRetirement,
       0.06
     );
 
     retirementDollars.push(compounded);
-    var subtitle: string =
+    const subtitle: string =
       "That's $" + compounded.toFixed(2) + " in retirement dollars!";
     cardSubtitle.push(subtitle);
 
