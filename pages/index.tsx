@@ -20,16 +20,16 @@ const Home: NextPage = () => {
             className="text-transparent bg-gradient-to-tr from-blue-500 to-purple-500 bg-clip-text"
           >
             FineLine!
-          </a>Deploy
+          </a>
         </h1>
 
         <p className="">when the ___ is ___</p>
 
         <div className="grid grid-cols-2 gap-4 my-4">
-          <a href="https://nextjs.org/docs" className="">
+          <a href="/timeline" className="">
             <Card>
-              <h2>Documentation &rarr;</h2>
-              <p>Find in-depth information about Next.js features and API.</p>
+              <h2>Timeline &rarr;</h2>
+              <p>View your personalized financial Timeline!</p>
             </Card>
           </a>
 

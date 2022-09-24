@@ -5,6 +5,7 @@ const Timeline: NextPage = () => {
   return (
     <main className="container mx-auto px-2">
       <h1>Your Timeline</h1>
+      <a className="text-8xl" href="/">&larr;</a>
       <ol className="relative border-l border-gray-200 dark:border-gray-700">
         <Segment
           title="Home Purchase"
