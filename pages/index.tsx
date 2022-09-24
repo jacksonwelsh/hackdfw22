@@ -20,7 +20,7 @@ const Home: NextPage = () => {
             className="text-transparent bg-gradient-to-tr from-blue-500 to-purple-500 bg-clip-text"
           >
             FineLine!
-          </a>
+          </a>Deploy
         </h1>
 
         <p className="">when the ___ is ___</p>
@@ -51,13 +51,13 @@ const Home: NextPage = () => {
           </a>
 
           <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            href="/simulator"
             className=""
           >
             <Card>
-              <h2>Deploy &rarr;</h2>
+              <h2>Financial Simulator &rarr;</h2>
               <p>
-                Instantly deploy your Next.js site to a public URL with Vercel.
+                Try our fun financial life simulator if you dare! &rarr;
               </p>
             </Card>
           </a>

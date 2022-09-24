@@ -12,7 +12,7 @@ return (
 //portfolio
 
 <nav className="w-full">
-    <h1>this is H1</h1>
+    <h1 className="fixed inset-x-0 bottom-0 text-center">This is the Footer/NavBar</h1>
 </nav>
 
 
