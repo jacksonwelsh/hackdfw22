@@ -55,12 +55,12 @@ const router = useRouter();
 return (
   <AnimateSharedLayout>
   <nav className="fixed inset-x-0 bottom-0 h-16 p-4 bg-neutral-800">
-    <div className="max-w-2xl mx-auto h-full flex justify-between items-center">
+    <div className="max-w-2xl mx-auto h-full flex justify-around items-center">
       {ROUTES.map(({route, label, icon}) => {
         return (
           <Link key={label} href={route} scroll={false}>
           <a className="mr-6 sm:mr-8 flex flex-col relative">
-              <span className="flex gap-1">{icon}{label}</span>
+              <span className="flex gap-1">{icon}<span className="hidden sm:inline">{label}</span></span>
               {isActiveLink(route, router.pathname) && (
                   <motion.div
                       layoutId="navigation-underline"
