@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useId } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Card from "../components/Card";
+import companies from "../assets/companies.json";
 
 const Shavings: NextPage = () => {
   function getRandom(min: number, max: number): number {
@@ -35,8 +36,12 @@ const Shavings: NextPage = () => {
     cents += getRandom(0, 30) * 100;
 
     dollars.push(cents / 100);
+    console.log(companies);
+    const businessIndex: number = getRandom(0, companies.companies.length - 1);
+    const business: string = companies.companies[businessIndex];
+    // const business = "PLACEHOLDER";
     var title: string =
-      "$" + (cents / 100).toString() + " from purchase at PLACEHOLDER";
+      "$" + (cents / 100).toString() + ' from purchase at "' + business + '"';
     cardTitles.push(title);
 
     let compounded: number = calcRetirementValue(
@@ -44,6 +49,7 @@ const Shavings: NextPage = () => {
       yearsToRetirement,
       0.06
     );
+
     retirementDollars.push(compounded);
     var subtitle: string =
       "That's $" + compounded.toFixed(2) + " in retirement dollars!";
@@ -58,8 +64,8 @@ const Shavings: NextPage = () => {
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
         {cardTitles.map((numEntries, index) => (
           <Card key={uuidv4()}>
-            {<h2>{cardTitles[index]}</h2>}
-            {<h3>{cardSubtitle[index]}</h3>}
+            <h2>{cardTitles[index]}</h2>
+            <h3>{cardSubtitle[index]}</h3>
           </Card>
         ))}
       </div>
