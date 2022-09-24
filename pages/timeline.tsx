@@ -6,8 +6,9 @@ const Timeline: NextPage = () => {
   return (
     <main className="container mx-auto px-2">
       <h1>Your Timeline</h1>
-      <ol className="relative border-l border-gray-200 dark:border-gray-700">
+      <ol className="relative border-l border-gray-200 dark:border-gray-700 ml-4 sm:ml-0">
         <Segment
+          status="ok"
           title="Home Purchase"
           year={2035}
           icon={
@@ -25,6 +26,7 @@ const Timeline: NextPage = () => {
           my awesome segment
         </Segment>
         <Segment
+          status="ok"
           title="EuroTrip 2040"
           year={2040}
           icon={
@@ -41,6 +43,7 @@ const Timeline: NextPage = () => {
           [expletive-ing] and [other expletive-ing] my way through europe
         </Segment>
         <Segment
+          status="danger"
           title="Home Purchase"
           year={2035}
           icon={
@@ -58,6 +61,7 @@ const Timeline: NextPage = () => {
           my awesome segment
         </Segment>
         <Segment
+          status="warn"
           title="Home Purchase"
           year={2035}
           icon={
