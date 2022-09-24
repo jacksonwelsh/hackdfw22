@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import Card from "../components/Card";
 
 const Simulator: NextPage = () => {
@@ -10,7 +11,9 @@ const Simulator: NextPage = () => {
             <div className="text-center pb-10">
                 <h1>Hey bucko, life sim 'boutta be bussin frfr on God SSSSHHHEEEEEEESSSSHHHH</h1>
             </div>
-            <a className="pl-10 text-8xl" href="/">&larr;</a>
+            <Link href={"/"}>
+                <a className="pl-10 text-8xl" href="/">&larr;</a>
+            </Link>
             <div className="grid grid-cols-2 gap-4 my-4 px-10">
                 <Card>
                     <h2>Buy a Car.</h2>

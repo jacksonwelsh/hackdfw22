@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Segment from "../components/timeline/Segment";
 
 const Timeline: NextPage = () => {
   return (
     <main className="container mx-auto px-2">
       <h1>Your Timeline</h1>
-      <a className="text-8xl" href="/">&larr;</a>
       <ol className="relative border-l border-gray-200 dark:border-gray-700">
         <Segment
           title="Home Purchase"
@@ -75,6 +75,9 @@ const Timeline: NextPage = () => {
           my awesome segment
         </Segment>
       </ol>
+      <Link href={"/"}>
+                <a className="text-8xl" href="/">&larr;</a>
+      </Link>
     </main>
   );
 };
