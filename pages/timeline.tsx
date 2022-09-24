@@ -8,6 +8,8 @@ import {
 import Head from "next/head";
 import Link from "next/link";
 import Segment from "../components/timeline/Segment";
+import Modal from "../components/Modal";
+import { useState } from "react";
 
 type FinanceState = {
   currInvestments: number;
@@ -128,11 +130,30 @@ const Timeline: NextPage = () => {
       ? "over"
       : "under";
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const confirmInvestment = () => {
+    const amt = finances.currCash - finances.safetyNet * 1.5;
+    finances.currCash -= amt;
+    finances.currInvestments += amt;
+    setModalOpen(false);
+  };
+
   return (
     <>
       <Head>
         <title>Timeline</title>
       </Head>
+      <Modal
+        title={`Invest ${formatter.format(
+          finances.currCash - finances.safetyNet * 1.5
+        )}?`}
+        open={modalOpen}
+        setOpen={setModalOpen}
+        onConfirm={confirmInvestment}
+      >
+        it'll go to poor people and/or crackheads
+      </Modal>
       <main className="container mx-auto px-2 snap-y snap-mandatory">
         <h1>Your Timeline</h1>
 
@@ -171,7 +192,10 @@ const Timeline: NextPage = () => {
               {health === "over" && (
                 <>
                   That's a lot of cash! You've already met your safety net;{" "}
-                  <button className="underline">
+                  <button
+                    className="underline"
+                    onClick={() => setModalOpen(true)}
+                  >
                     invest{" "}
                     {formatter.format(
                       finances.currCash - finances.safetyNet * 1.5
