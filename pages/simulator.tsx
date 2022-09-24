@@ -6,16 +6,10 @@ const Simulator: NextPage = () => {
   return (
     <main className="flex-col">
       <div className="text-center pb-10">
-        <h1>
-          Hey bucko, life sim 'boutta be bussin frfr on God
-          SSSSHHHEEEEEEESSSSHHHH
-        </h1>
+        <h2>
+          Explore various life events and experience how they may affect your retirement!
+        </h2>
       </div>
-      <Link href={"/"}>
-        <a className="pl-10 text-8xl" href="/">
-          &larr;
-        </a>
-      </Link>
       <div className="grid grid-cols-2 gap-4 my-4 px-10">
         <Card>
           <h2>Buy a Car.</h2>
