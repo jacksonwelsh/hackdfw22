@@ -228,11 +228,6 @@ const Timeline: NextPage = () => {
             )
           )}
         </ol>
-        <Link href={"/"}>
-          <a className="text-8xl" href="/">
-            &larr;
-          </a>
-        </Link>
       </main>
     </>
   );
