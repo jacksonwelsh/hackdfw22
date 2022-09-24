@@ -80,7 +80,9 @@ const Timeline: NextPage = () => {
         </Segment>
       </ol>
       <Link href={"/"}>
-                <a className="text-8xl" href="/">&larr;</a>
+        <a className="text-8xl" href="/">
+          &larr;
+        </a>
       </Link>
     </main>
   );
