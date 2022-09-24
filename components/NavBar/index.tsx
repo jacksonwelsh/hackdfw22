@@ -48,7 +48,7 @@ return (
       {ROUTES.map(({route, label, icon}) => {
         const underlineStyle = router.pathname === route ? 'underline underline-offset-4' : ''
         return (
-          <Link href={route}>
+          <Link key={route} href={route}>
           <a className={`flex gap-2 items-center ${underlineStyle}`}>{icon}<span className="hidden sm:inline">{label}</span></a>
         </Link>
         )
