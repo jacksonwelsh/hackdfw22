@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { v4 as uuidv4 } from "uuid";
 import Card from "../components/Card";
+import Example from "../components/shaveSettings";
 import companies from "../assets/companies.json";
 
 interface ShavingsProps {
@@ -24,6 +25,7 @@ const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
             <h3>{subtitle}</h3>
           </Card>
         ))}
+        <Example />
       </div>
     </main>
   );
@@ -87,8 +89,6 @@ export async function getServerSideProps() {
       subtitle,
     });
   }
-
-  console.log(cards);
 
   return {
     props: {
