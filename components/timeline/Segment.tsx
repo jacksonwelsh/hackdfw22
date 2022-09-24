@@ -6,7 +6,9 @@ interface SegmentProps {
   icon?: React.ReactNode;
   year: number;
   status: "ok" | "warn" | "danger";
+  cost?: string;
 }
+export type Status = "ok" | "danger" | "warn";
 
 const Segment: React.FC<SegmentProps> = ({
   children,
@@ -14,6 +16,7 @@ const Segment: React.FC<SegmentProps> = ({
   icon,
   year,
   status,
+  cost,
 }) => {
   return (
     <li className="mb-24 ml-6 h-screen md:h-auto snap-always snap-center">
@@ -33,6 +36,7 @@ const Segment: React.FC<SegmentProps> = ({
             ? "Warning"
             : "Danger"}
         </Badge>
+        {cost && <span className="text-lg">Expected cost: {cost}</span>}
       </h2>
       <div className="ml-2">{children}</div>
     </li>

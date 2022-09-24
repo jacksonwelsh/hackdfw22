@@ -6,10 +6,9 @@ import {
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/solid";
 import Head from "next/head";
-import Link from "next/link";
-import Segment from "../components/timeline/Segment";
+import Segment, { Status } from "../components/timeline/Segment";
 import Modal from "../components/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FinanceState = {
   currInvestments: number;
@@ -42,37 +41,6 @@ const finances: FinanceState = {
   safetyNet: 6000,
 };
 
-const goals: Goal[] = [
-  {
-    title: "Home Purchase",
-    cost: 100_000,
-    goalYear: 2030,
-    type: "goal",
-    icon: <HomeIcon />,
-  },
-  {
-    title: "EuroTrip 2035",
-    cost: 5_000,
-    goalYear: 2035,
-    type: "goal",
-    icon: <PaperAirplaneIcon />,
-  },
-  {
-    title: "Home Upgrade",
-    cost: 200_000,
-    goalYear: 2045,
-    type: "goal",
-    icon: <HomeIcon />,
-  },
-  {
-    title: "Full Retirement",
-    cost: 4_000_000,
-    goalYear: 2067,
-    type: "retirement",
-    icon: <BanknotesIcon />,
-  },
-];
-
 const Timeline: NextPage = () => {
   const calculateGrowth = (
     startAmt: number,
@@ -95,14 +63,47 @@ const Timeline: NextPage = () => {
     return P;
   };
 
+  const [goals, setGoals] = useState<Goal[]>([
+    {
+      title: "Home Purchase",
+      cost: 100_000,
+      goalYear: 2030,
+      type: "goal",
+      icon: <HomeIcon />,
+    },
+    {
+      title: "EuroTrip 2035",
+      cost: 5_000,
+      goalYear: 2035,
+      type: "goal",
+      icon: <PaperAirplaneIcon />,
+    },
+    {
+      title: "Home Upgrade",
+      cost: 200_000,
+      goalYear: 2045,
+      type: "goal",
+      icon: <HomeIcon />,
+    },
+    {
+      title: "Full Retirement",
+      cost: 4_000_000,
+      goalYear: 2067,
+      type: "retirement",
+      icon: <BanknotesIcon />,
+    },
+  ]);
+
   const calculated: CalculatedGoal[] = [];
+
   for (let i = 0; i < goals.length; ++i) {
     const goal = goals[i];
     const prevAmount =
-      i === 0
+      calculated.length === 0
         ? finances.currInvestments
         : calculated[i - 1].endAmt - calculated[i - 1].cost;
-    const startYear = i === 0 ? finances.year : calculated[i - 1].goalYear;
+    const startYear =
+      calculated.length === 0 ? finances.year : calculated[i - 1].goalYear;
 
     const endAmt = calculateGrowth(
       prevAmount,
@@ -114,7 +115,6 @@ const Timeline: NextPage = () => {
 
     calculated.push({ ...goal, endAmt });
   }
-
   console.table(calculated);
 
   const formatter = Intl.NumberFormat("en-US", {
@@ -152,7 +152,7 @@ const Timeline: NextPage = () => {
         setOpen={setModalOpen}
         onConfirm={confirmInvestment}
       >
-        it'll go to poor people and/or crackheads
+        {" "}
       </Modal>
       <main className="container mx-auto px-2 snap-y snap-mandatory">
         <h1>Your Timeline</h1>
@@ -209,23 +209,47 @@ const Timeline: NextPage = () => {
             </p>
           </Segment>
           {calculated.map(
-            ({ title, goalYear, cost, type, icon, endAmt }, idx) => (
-              <Segment
-                status={
-                  cost > endAmt
-                    ? "danger"
-                    : cost * 1.15 > endAmt
-                    ? "warn"
-                    : "ok"
-                }
-                title={title}
-                year={goalYear}
-                icon={icon}
-                key={idx}
-              >
-                my awesome segment
-              </Segment>
-            )
+            ({ title, goalYear, cost, type, icon, endAmt }, idx) => {
+              const health: Status =
+                cost > endAmt ? "danger" : cost * 1.15 > endAmt ? "warn" : "ok";
+
+              return (
+                <Segment
+                  status={health}
+                  title={title}
+                  year={goalYear}
+                  icon={icon}
+                  key={idx}
+                  cost={formatter.format(cost)}
+                >
+                  If you keep contributing at this rate, we expect you'll have
+                  about {formatter.format(endAmt)} invested when you hit this
+                  milestone.
+                  {health === "danger" && (
+                    <p className="text-red-500 font-bold">
+                      This will not fund your milestone.{" "}
+                      <button
+                        className="underline"
+                        onClick={() =>
+                          setGoals([
+                            ...goals.slice(0, idx),
+                            ...goals.slice(idx + 1),
+                          ])
+                        }
+                      >
+                        Skip this milestone?
+                      </button>
+                    </p>
+                  )}
+                  {health === "warn" && (
+                    <p className="text-orange-500 font-bold">
+                      This should fund your milestone, but we recommend
+                      increasing your investments to make sure you'll meet it.
+                    </p>
+                  )}
+                </Segment>
+              );
+            }
           )}
         </ol>
       </main>
