@@ -61,6 +61,17 @@ const Home: NextPage = () => {
               </p>
             </Card>
           </a>
+          <a
+            href="/fines"
+            className=""
+          >
+            <Card>
+              <h2>Fines &rarr;</h2>
+              <p>
+                This is the fun police! &rarr;
+              </p>
+            </Card>
+          </a>
         </div>
       </main>
 
