@@ -59,8 +59,8 @@ return (
       {ROUTES.map(({route, label, icon}) => {
         return (
           <Link key={label} href={route} scroll={false}>
-          <a className="mr-6 sm:mr-8 flex flex-col relative">
-              <span className="flex gap-1">{icon}<span className="hidden sm:inline">{label}</span></span>
+          <a className=" flex flex-col relative">
+              <span className="flex flex-col gap-1 items-center sm:flex-row">{icon}<span className="text-xs">{label}</span></span>
               {isActiveLink(route, router.pathname) && (
                   <motion.div
                       layoutId="navigation-underline"
