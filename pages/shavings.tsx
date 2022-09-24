@@ -1,4 +1,6 @@
 import type { NextPage } from "next";
+import { useId } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Card from "../components/Card";
 
 const Shavings: NextPage = () => {
@@ -55,7 +57,7 @@ const Shavings: NextPage = () => {
       </div>
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
         {cardTitles.map((numEntries, index) => (
-          <Card>
+          <Card key={uuidv4()}>
             {<h2>{cardTitles[index]}</h2>}
             {<h3>{cardSubtitle[index]}</h3>}
           </Card>
