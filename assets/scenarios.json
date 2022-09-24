@@ -1,0 +1,12 @@
+{
+  "tiles": [
+    {
+      "name": "Buy a car",
+      "cost": -20000
+    },
+    {
+      "name": "Sell a car",
+      "cost": 20000
+    }
+  ]
+}
