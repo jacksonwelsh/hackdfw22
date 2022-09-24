@@ -16,9 +16,9 @@ const Segment: React.FC<SegmentProps> = ({
   status,
 }) => {
   return (
-    <li className="mb-10 ml-6">
+    <li className="mb-24 ml-6 h-screen md:h-auto snap-always snap-center">
       <span className="flex absolute -left-4 justify-center items-center w-8 h-8 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900 text-blue-200 fill-current">
-        {icon}
+        <div className="h-5 w-5">{icon}</div>
       </span>
 
       <h2 className="mb-1 ml-2 mt-6 -translate-y-4">

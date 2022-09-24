@@ -7,13 +7,13 @@ const Badge: React.FC<BadgeProps> = ({ variant, children }) => {
   let classes;
   switch (variant) {
     case "ok":
-      classes = "bg-green-700 outline outline-green-800 text-green-100";
+      classes = "bg-green-700 ring ring-green-800 text-green-100";
       break;
     case "warn":
-      classes = "bg-orange-700 outline outline-orange-800 text-orange-100";
+      classes = "bg-orange-700 ring ring-orange-800 text-orange-100";
       break;
     case "danger":
-      classes = "bg-red-700 outline outline-red-800 text-red-100";
+      classes = "bg-red-700 ring ring-red-800 text-red-100";
   }
   return (
     <div
