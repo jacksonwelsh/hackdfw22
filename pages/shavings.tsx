@@ -8,11 +8,10 @@ interface ShavingsProps {
     id: string;
     title: string;
     subtitle: string;
-  }[]
+  }[];
 }
 
-const Shavings: NextPage<ShavingsProps> = ({cards}) => {
-
+const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
   return (
     <main className="flex-col">
       <div className="text-center pb-10">
@@ -25,11 +24,11 @@ const Shavings: NextPage<ShavingsProps> = ({cards}) => {
             <h3>{cardSubtitle[index]}</h3>
           </Card>
         ))} */}
-        {cards.map(({id, title, subtitle}) => (
+        {cards.map(({ id, title, subtitle }) => (
           <Card key={id}>
-          <h2>{title}</h2>
-          <h3>{subtitle}</h3>
-        </Card>
+            <h2>{title}</h2>
+            <h3>{subtitle}</h3>
+          </Card>
         ))}
       </div>
     </main>
@@ -64,6 +63,7 @@ export async function getServerSideProps() {
 
   const cards = [];
 
+  const numCompanies = companies.companies.length;
   for (let i = 0; i < numEntries; i++) {
     let cents = 0;
     cents = getRandom(0, 99);
@@ -73,7 +73,6 @@ export async function getServerSideProps() {
     // console.log(companies);
     const businessIndex: number = getRandom(0, companies.companies.length - 1);
     const business: string = companies.companies[businessIndex];
-    // const business = "PLACEHOLDER";
     var title: string =
       "$" + (cents / 100).toString() + ' from purchase at "' + business + '"';
     cardTitles.push(title);
@@ -92,17 +91,17 @@ export async function getServerSideProps() {
     cards.push({
       id: uuidv4(),
       title,
-      subtitle
-    })
+      subtitle,
+    });
   }
 
-  console.log(cards)
+  console.log(cards);
 
   return {
     props: {
-      cards
+      cards,
     }, // will be passed to the page component as props
-  }
+  };
 }
 
 export default Shavings;
