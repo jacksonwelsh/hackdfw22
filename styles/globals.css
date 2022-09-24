@@ -32,6 +32,6 @@ h3 {
   }
   body {
     color: white;
-    background: black;
+    background: #171717;  /* bg-neutral-900 */
   }
 }
