@@ -10,13 +10,20 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
+}
+
+h1 {
+  @apply text-6xl font-black my-2;
+}
+
+h2 {
+  @apply text-4xl font-bold my-2;
+}
+
+h3 {
+  @apply text-2xl font-bold my-1;
 }
 
 @media (prefers-color-scheme: dark) {
