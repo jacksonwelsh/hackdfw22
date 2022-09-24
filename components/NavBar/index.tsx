@@ -1,5 +1,15 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { AnimateSharedLayout, motion } from 'framer-motion'
+
+const isActiveLink = (href: string, currentPathname: string): boolean => {
+  if (href === '/') {
+      return href === currentPathname
+  }
+
+  return currentPathname.startsWith(href)
+}
+
 interface RouteProps {
     route: string;
     label: string;
@@ -34,7 +44,6 @@ const ROUTES: RouteProps[] = [
     icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
   </svg>
-  
   },
 ]
 
@@ -44,18 +53,29 @@ const NavBar: React.FC<NavBarProps> = () => {
 const router = useRouter();
 
 return (
+  <AnimateSharedLayout>
   <nav className="fixed inset-x-0 bottom-0 h-16 p-4 bg-neutral-800">
     <div className="max-w-2xl mx-auto h-full flex justify-between items-center">
       {ROUTES.map(({route, label, icon}) => {
-        const underlineStyle = router.pathname === route ? 'underline underline-offset-4' : ''
         return (
-          <Link key={route} href={route}>
-          <a className={`flex gap-2 items-center ${underlineStyle}`}>{icon}<span className="hidden sm:inline">{label}</span></a>
-        </Link>
+          <Link key={label} href={route} scroll={false}>
+          <a className="mr-6 sm:mr-8 flex flex-col relative">
+              <span className="flex gap-1">{icon}{label}</span>
+              {isActiveLink(route, router.pathname) && (
+                  <motion.div
+                      layoutId="navigation-underline"
+                      className="w-full border white-300"
+                      animate
+                  />
+              )}
+          </a>
+      </Link>
         )
       })}
     </div>
-  </nav>)
+  </nav>
+  </AnimateSharedLayout>
+  );
 };
 
 export default NavBar;
