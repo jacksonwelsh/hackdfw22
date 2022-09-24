@@ -8,16 +8,8 @@ import {
 import Head from "next/head";
 import Segment, { Status } from "../components/timeline/Segment";
 import Modal from "../components/Modal";
+import Tools, { FinanceState } from "../components/timeline/Tools";
 import { useEffect, useState } from "react";
-
-type FinanceState = {
-  currInvestments: number;
-  currCash: number;
-  growth: number;
-  year: number;
-  birthYear: number;
-  safetyNet: number;
-};
 
 type Goal = {
   title: string;
@@ -31,15 +23,6 @@ type Goal = {
 type Health = "ok" | "over" | "under";
 
 type CalculatedGoal = Goal & { endAmt: number };
-
-const finances: FinanceState = {
-  currInvestments: 25_000,
-  currCash: 15000,
-  growth: 0.06,
-  year: 2022,
-  birthYear: 2000,
-  safetyNet: 6000,
-};
 
 const Timeline: NextPage = () => {
   const calculateGrowth = (
@@ -61,6 +44,25 @@ const Timeline: NextPage = () => {
     }
 
     return P;
+  };
+
+  const [growth, setGrowth] = useState(0.06);
+  const [annualInvestmentBase, setAnnualInvestmentBase] = useState(5_000);
+  const [annualContributionIncrease, setAnnualContributionIncrease] =
+    useState(0.03);
+
+  const finances: FinanceState = {
+    currInvestments: 25_000,
+    currCash: 15000,
+    growth,
+    setGrowth,
+    annualInvestmentBase,
+    setAnnualInvestmentBase,
+    annualContributionIncrease,
+    setAnnualContributionIncrease,
+    year: 2022,
+    birthYear: 2000,
+    safetyNet: 6000,
   };
 
   const [goals, setGoals] = useState<Goal[]>([
@@ -94,28 +96,36 @@ const Timeline: NextPage = () => {
     },
   ]);
 
-  const calculated: CalculatedGoal[] = [];
+  const [calculated, setCalculated] = useState<CalculatedGoal[]>([]);
 
-  for (let i = 0; i < goals.length; ++i) {
-    const goal = goals[i];
-    const prevAmount =
-      calculated.length === 0
-        ? finances.currInvestments
-        : calculated[i - 1].endAmt - calculated[i - 1].cost;
-    const startYear =
-      calculated.length === 0 ? finances.year : calculated[i - 1].goalYear;
+  useEffect(() => {
+    console.log("bruh");
+    setCalculated([]);
+    const inner: CalculatedGoal[] = [];
+    for (let i = 0; i < goals.length; ++i) {
+      console.log(calculated);
+      console.log({ i });
+      const goal = goals[i];
+      const prevAmount =
+        i === 0
+          ? finances.currInvestments
+          : inner[i - 1].endAmt - inner[i - 1].cost;
+      const startYear = i === 0 ? finances.year : inner[i - 1].goalYear;
 
-    const endAmt = calculateGrowth(
-      prevAmount,
-      startYear,
-      goal.goalYear,
-      finances.growth,
-      5_000
-    );
+      const endAmt = calculateGrowth(
+        prevAmount,
+        startYear,
+        goal.goalYear,
+        growth,
+        annualInvestmentBase,
+        annualContributionIncrease
+      );
 
-    calculated.push({ ...goal, endAmt });
-  }
-  console.table(calculated);
+      inner.push({ ...goal, endAmt });
+      setCalculated((calculated) => [...calculated, { ...goal, endAmt }]);
+    }
+  }, [goals, growth, annualContributionIncrease, annualInvestmentBase]);
+  console.log({ calculated });
 
   const formatter = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -207,6 +217,7 @@ const Timeline: NextPage = () => {
               {health === "under" &&
                 "Looks like you still have some work to go to get your safety net built."}
             </p>
+            <Tools {...finances} />
           </Segment>
           {calculated.map(
             ({ title, goalYear, cost, type, icon, endAmt }, idx) => {
