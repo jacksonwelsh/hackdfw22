@@ -5,11 +5,11 @@ import Card from "../components/Card";
 
 const Simulator: NextPage = () => {
   const [savings, calcSavings] = useState(0)
-  const [age, ageUp] = useState(0)
+  const [age, ageUp] = useState(25)
 
   return (
     <main className="flex-col">
-      <div className="text-center pb-4">
+      <div className="text-center">
         <h2>
           Explore various life events and experience how they may affect your retirement!
         </h2>
