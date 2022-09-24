@@ -19,15 +19,6 @@ const Shavings: NextPage = () => {
                     <h2>$10.00 from purchase at "Sample place"</h2>
                     <h4>That's $154.11 retirement dollars!</h4>
                 </Card>
-                <Card>
-                    <h2>Deposit into 401k.</h2>
-                </Card>
-                <Card>
-                    <h2>Pay Credit Card debt.</h2>
-                </Card>
-                <Card>
-                    <h2>Hire an Escort. (sus)</h2>
-                </Card>
             </div>
         </main>
     );
