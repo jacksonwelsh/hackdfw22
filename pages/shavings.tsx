@@ -7,13 +7,21 @@ import companies from "../assets/companies.json";
 interface ShavingsProps {
   cards: {
     id: string;
-    timeStamp: String;
+    timeStamp: string;
     title: string;
     subtitle: string;
   }[];
 }
 
 const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
+  function compareDateString(a: string, b: string) {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
+    return dateB.getTime() - dateA.getTime();
+  }
+
+  cards.sort((a, b) => compareDateString(a.timeStamp, b.timeStamp));
+
   return (
     <main className="flex-col">
       <div className="text-center pb-10">
@@ -81,13 +89,8 @@ export async function getServerSideProps() {
     return value;
   }
 
-  const numEntries: number = 12;
+  const numEntries: number = 22;
   const yearsToRetirement: number = 30;
-
-  let dollars: number[] = [];
-  let cardTitles: string[] = [];
-  let retirementDollars: number[] = [];
-  let cardSubtitle: string[] = [];
   const cards = [];
 
   const numCompanies = companies.companies.length;
@@ -97,7 +100,6 @@ export async function getServerSideProps() {
     cents += getRandom(0, 30) * 100;
     const randDate = getPastDateThisMonth();
 
-    dollars.push(cents / 100);
     const businessIndex: number = getRandom(0, numCompanies - 1);
     const business: string = companies.companies[businessIndex];
     const title: string =
