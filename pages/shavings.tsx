@@ -7,6 +7,7 @@ import companies from "../assets/companies.json";
 interface ShavingsProps {
   cards: {
     id: string;
+    timeStamp: String;
     title: string;
     subtitle: string;
   }[];
@@ -19,8 +20,9 @@ const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
         <h1>Shavings</h1>
       </div>
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
-        {cards.map(({ id, title, subtitle }) => (
+        {cards.map(({ id, timeStamp, title, subtitle }) => (
           <Card key={id}>
+            <h6>{timeStamp}</h6>
             <h2>{title}</h2>
             <h3>{subtitle}</h3>
           </Card>
@@ -40,9 +42,12 @@ export async function getServerSideProps() {
 
   function getPastDateThisMonth() {
     const currDate = new Date();
-    const randDay = getRandom(0, currDate.getDay());
+
+    const randDay = getRandom(0, currDate.getDate());
+
     var randHr: number, randMin: number;
-    if (randDay === currDate.getDay()) {
+
+    if (randDay === currDate.getDate()) {
       randHr = getRandom(0, currDate.getHours());
 
       if (randHr === currDate.getHours()) {
@@ -51,7 +56,7 @@ export async function getServerSideProps() {
         randMin = getRandom(0, 59);
       }
     } else {
-      randHr = getRandom(0, currDate.getHours());
+      randHr = getRandom(0, 23);
       randMin = getRandom(0, 59);
     }
     const randDate = new Date(
@@ -61,6 +66,7 @@ export async function getServerSideProps() {
       randHr,
       randMin
     );
+    return randDate;
     console.log(randDate);
   }
 
@@ -89,14 +95,13 @@ export async function getServerSideProps() {
     let cents = 0;
     cents = getRandom(0, 99);
     cents += getRandom(0, 30) * 100;
-    const time = getPastDateThisMonth();
+    const randDate = getPastDateThisMonth();
 
     dollars.push(cents / 100);
     const businessIndex: number = getRandom(0, numCompanies - 1);
     const business: string = companies.companies[businessIndex];
     const title: string =
       "$" + (cents / 100).toString() + ' from purchase at "' + business + '"';
-    cardTitles.push(title);
 
     const compounded: number = calcRetirementValue(
       cents / 100,
@@ -104,13 +109,12 @@ export async function getServerSideProps() {
       0.06
     );
 
-    retirementDollars.push(compounded);
     const subtitle: string =
       "That's $" + compounded.toFixed(2) + " in retirement dollars!";
-    cardSubtitle.push(subtitle);
 
     cards.push({
       id: uuidv4(),
+      timeStamp: randDate.toString(),
       title,
       subtitle,
     });
