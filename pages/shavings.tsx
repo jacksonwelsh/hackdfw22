@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Card from "../components/Card";
 import Example from "../components/shaveSettings";
 import companies from "../assets/companies.json";
+import FadeInFromTop from "../components/Animations/FadeInFromTop";
 
 interface ShavingsProps {
   cards: {
@@ -29,9 +30,19 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
   return (
     <main className="flex-col">
       <div className="text-center pb-10">
-        <h1>Shavings</h1>
-        <h3>{yearsToRetirement} years until retirement</h3>
-        <h6>Each time a shaving is made, this number goes down</h6>
+        <FadeInFromTop>
+          <h1 className="text-3xl font-bold">Shavings</h1>
+        </FadeInFromTop>
+        <FadeInFromTop>
+          <h2 className="text-lg font-bold mt-0">
+            {yearsToRetirement} years until retirement
+          </h2>
+        </FadeInFromTop>
+        <FadeInFromTop>
+          <h6 className="text-md mt-0">
+            Each time a shaving is made, this number goes down
+          </h6>
+        </FadeInFromTop>
       </div>
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
         <Card key={uuidv4()}>
