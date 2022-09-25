@@ -1,0 +1,64 @@
+{
+  "tiles": [
+    {
+      "name": "Buy a car",
+      "cost": -20000
+    },
+    {
+      "name": "Deposit into your 401k",
+      "cost": 10500
+    },
+    {
+      "name": "New Video Game Console",
+      "cost": -500
+    },
+    {
+      "name": "Invest into HYSA",
+      "cost": 2000
+    },
+    {
+      "name": "Invest in Crypto",
+      "cost": -5000
+    },
+    {
+      "name": "Go on Vacation",
+      "cost": -2000
+    },
+    {
+      "name": "Accidental Hospital Bill",
+      "cost": -15000
+    },
+    {
+      "name": "House Down Payment",
+      "cost": -90000
+    },
+    {
+      "name": "Have a Child",
+      "cost": -180000
+    },
+    {
+      "name": "Rotting Floorboards",
+      "cost": -3000
+    },
+    {
+      "name": "Sell a House",
+      "cost": 350000
+    },
+    {
+      "name": "Buy a Boat",
+      "cost": -40000
+    },
+    {
+      "name": "Funeral for Family Member",
+      "cost": -4000
+    },
+    {
+      "name": "Refinance a Loan",
+      "cost": 20000
+    },
+    {
+      "name": "Car Repair",
+      "cost": -1200
+    }
+  ]
+}
