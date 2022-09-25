@@ -1,5 +1,3 @@
-import { Children, Fragment, useState } from "react";
-
 interface PositionModalProps {
   modalTitle: string;
   children: React.ReactNode;
