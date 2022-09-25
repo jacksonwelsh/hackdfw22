@@ -35,7 +35,7 @@ const Simulator: NextPage<SimulatorProps> = (props) => {
     <main className="flex-col">
       <div className="text-center">
         <FadeInFromTop>
-          <h1 className="text-3xl font-bold mb-0">Feeling Lucky?</h1>
+          <h1 className="text-4xl font-bold mb-0">Feeling Lucky?</h1>
         </FadeInFromTop>
         <FadeInFromTop>
           <h2 className="text-lg font-bold mt-0">Explore various life events and experience how they may affect your retirement!</h2>
