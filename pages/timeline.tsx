@@ -22,7 +22,10 @@ type Goal = {
 
 type Health = "ok" | "over" | "under";
 
-type CalculatedGoal = Goal & { endAmt: number };
+type CalculatedGoal = Goal & {
+  endAmt: number;
+  steps: Record<number, [number, number]>;
+};
 
 const Timeline: NextPage = () => {
   const calculateGrowth = (
@@ -32,18 +35,21 @@ const Timeline: NextPage = () => {
     yoyGrowth: number,
     annualContribution: number,
     annualContributionIncrease = 0.03
-  ) => {
+  ): [number, Record<number, [number, number]>] => {
     const yearsElapsed = endYear - startYear;
     let A = annualContribution;
     let P = startAmt;
 
+    const M: Record<number, [number, number]> = {};
     for (let i = 0; i < yearsElapsed; ++i) {
       P += A;
       P *= 1 + yoyGrowth;
       A *= 1 + annualContributionIncrease;
+      M[startYear + i] = [P, A];
+      console.log({ M });
     }
 
-    return P;
+    return [P, M];
   };
 
   const [growth, setGrowth] = useState(0.06);
@@ -55,11 +61,8 @@ const Timeline: NextPage = () => {
     currInvestments: 25_000,
     currCash: 15000,
     growth,
-    setGrowth,
     annualInvestmentBase,
-    setAnnualInvestmentBase,
     annualContributionIncrease,
-    setAnnualContributionIncrease,
     year: 2022,
     birthYear: 2000,
     safetyNet: 6000,
@@ -113,24 +116,29 @@ const Timeline: NextPage = () => {
             Math.min(inner[i - 1].endAmt, inner[i - 1].cost);
       const startYear = i === 0 ? finances.year : inner[i - 1].goalYear;
 
-      const endAmt = calculateGrowth(
+      const [endAmt, steps] = calculateGrowth(
         prevAmount,
         startYear,
         goal.goalYear,
-        growth,
-        annualInvestmentBase,
-        annualContributionIncrease
+        finances.growth,
+        finances.annualInvestmentBase,
+        finances.annualContributionIncrease
       );
 
-      inner.push({ ...goal, endAmt });
-      setCalculated((calculated) => [...calculated, { ...goal, endAmt }]);
+      inner.push({ ...goal, endAmt, steps });
+      setCalculated((calculated) => [
+        ...calculated,
+        { ...goal, endAmt, steps },
+      ]);
     }
   }, [
     goals,
     growth,
     annualContributionIncrease,
     annualInvestmentBase,
-    finances,
+    finances.annualContributionIncrease,
+    finances.annualInvestmentBase,
+    finances.growth,
   ]);
   console.log({ calculated });
 
@@ -141,11 +149,11 @@ const Timeline: NextPage = () => {
 
   const health: Health =
     finances.currCash > finances.safetyNet &&
-      finances.currCash < finances.safetyNet * 1.75
+    finances.currCash < finances.safetyNet * 1.75
       ? "ok"
       : finances.currCash > finances.safetyNet * 1.75
-        ? "over"
-        : "under";
+      ? "over"
+      : "under";
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -184,6 +192,7 @@ const Timeline: NextPage = () => {
             year={new Date().getFullYear()}
             yearUntil={calculated[0]?.goalYear}
             icon={<ArrowRightCircleIcon />}
+            steps={calculated[0]?.steps}
           >
             <p>
               You have{" "}
@@ -200,8 +209,8 @@ const Timeline: NextPage = () => {
                   (health === "ok"
                     ? "from-teal-500 via-green-600 to-cyan-500"
                     : health === "over"
-                      ? "from-yellow-500 to-orange-500"
-                      : "from-red-500 to-pink-500")
+                    ? "from-yellow-500 to-orange-500"
+                    : "from-red-500 to-pink-500")
                 }
               >
                 {formatter.format(finances.currCash)}{" "}
@@ -228,10 +237,10 @@ const Timeline: NextPage = () => {
               {health === "under" &&
                 "Looks like you still have some work to go to get your safety net built."}
             </p>
-            <Tools {...finances} />
+            <Tools {...finances} setFinances={setFinances} />
           </Segment>
           {calculated.map(
-            ({ title, goalYear, cost, type, icon, endAmt }, idx) => {
+            ({ title, goalYear, cost, type, icon, endAmt, steps }, idx) => {
               const health: Status =
                 cost > endAmt ? "danger" : cost * 1.15 > endAmt ? "warn" : "ok";
 
@@ -247,6 +256,11 @@ const Timeline: NextPage = () => {
                   }
                   icon={icon}
                   key={idx}
+                  steps={
+                    idx !== calculated.length - 1
+                      ? calculated[idx + 1].steps
+                      : undefined
+                  }
                   cost={formatter.format(cost)}
                 >
                   If you keep contributing at this rate, we expect you'll have

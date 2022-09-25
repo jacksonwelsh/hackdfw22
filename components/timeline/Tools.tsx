@@ -4,28 +4,23 @@ export type FinanceState = {
   currInvestments: number;
   currCash: number;
   growth: number;
-  setGrowth: (n: number) => void;
   annualInvestmentBase: number;
-  setAnnualInvestmentBase: (n: number) => void;
   annualContributionIncrease: number;
-  setAnnualContributionIncrease: (n: number) => void;
   year: number;
   birthYear: number;
   safetyNet: number;
 };
 
-const Tools: React.FC<FinanceState> = ({
+const Tools: React.FC<FinanceState & { setFinances: Function }> = ({
   currCash,
   currInvestments,
   growth,
-  setGrowth,
   annualInvestmentBase,
-  setAnnualInvestmentBase,
   annualContributionIncrease,
-  setAnnualContributionIncrease,
   year,
   birthYear,
   safetyNet,
+  setFinances,
 }) => {
   return (
     <div className="p-2 rounded-md bg-gray-800">
@@ -41,7 +36,12 @@ const Tools: React.FC<FinanceState> = ({
               step={0.001}
               className="w-3/4"
               value={growth}
-              onChange={(e) => setGrowth(parseFloat(e.target.value))}
+              onChange={(e) =>
+                setFinances((finances: FinanceState) => ({
+                  ...finances,
+                  growth: parseFloat(e.target.value),
+                }))
+              }
             />
             <span>{(growth * 100).toFixed(1)}%</span>
           </div>
@@ -60,7 +60,10 @@ const Tools: React.FC<FinanceState> = ({
                 name="price"
                 value={annualInvestmentBase}
                 onChange={(e) =>
-                  setAnnualInvestmentBase(parseFloat(e.target.value))
+                  setFinances((finances: any) => ({
+                    ...finances,
+                    annualInvestmentBase: parseFloat(e.target.value),
+                  }))
                 }
                 id="price"
                 className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-8"
@@ -88,7 +91,10 @@ const Tools: React.FC<FinanceState> = ({
               className="w-3/4"
               value={annualContributionIncrease}
               onChange={(e) =>
-                setAnnualContributionIncrease(parseFloat(e.target.value))
+                setFinances((finances: any) => ({
+                  ...finances,
+                  annualContributionIncrease: parseFloat(e.target.value),
+                }))
               }
             />
             <span>{(annualContributionIncrease * 100).toFixed(1)}%</span>
