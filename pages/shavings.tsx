@@ -25,6 +25,9 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
     return dateB.getTime() - dateA.getTime();
   }
 
+  const zeroPad = (num: number, places: number) =>
+    String(num).padStart(places, "0");
+
   cards.sort((a, b) => compareDateString(a.timeStamp, b.timeStamp));
 
   return (
@@ -51,13 +54,27 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
             <h2>retirement dollars: ${retirement.toFixed(2)}</h2>
           </div>
         </Card>
-        {cards.map(({ id, timeStamp, title, subtitle }) => (
-          <Card key={id}>
-            <h6>{timeStamp}</h6>
-            <h3>{title}</h3>
-            <h4>{subtitle}</h4>
-          </Card>
-        ))}
+        {cards.map(({ id, timeStamp, title, subtitle }) => {
+          let thisDate = new Date(timeStamp);
+          let timeOfDay = "AM";
+          if (thisDate.getHours() >= 12) {
+            timeOfDay = "PM";
+          }
+          let hours = thisDate.getHours();
+          if (hours > 12) {
+            hours = hours - 12;
+          }
+          return (
+            <Card key={id}>
+              <h6>
+                {thisDate.toLocaleDateString()} - {hours}:
+                {zeroPad(thisDate.getMinutes(), 2)} {timeOfDay}
+              </h6>
+              <h3>{title}</h3>
+              <h4>{subtitle}</h4>
+            </Card>
+          );
+        })}
       </div>
     </main>
   );
