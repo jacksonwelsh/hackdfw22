@@ -9,8 +9,8 @@ interface ShavingsProps {
   cards: {
     id: string;
     timeStamp: string;
-    title: string;
-    subtitle: string;
+    title: string[];
+    subtitle: string[];
   }[];
   shavings: number;
   retirement: number;
@@ -34,7 +34,7 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
     <main className="flex-col">
       <div className="text-center pb-10">
         <FadeInFromTop>
-          <h1 className="text-3xl font-bold">Shavings</h1>
+          <h1 className="text-4xl font-bold">Shavings</h1>
         </FadeInFromTop>
         <FadeInFromTop>
           <h2 className="text-lg font-bold mt-0">
@@ -48,10 +48,10 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
         </FadeInFromTop>
       </div>
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
-        <Card key={uuidv4()}>
+        <Card className="bg-neutral-800 border-none" key={uuidv4()}>
           <div className="grid grid-col-1 gap-4 my-4 px-12 break-words sm:grid-col-2 ">
-            <h2>total shavings: ${shavings.toFixed(2)}</h2>
-            <h2>retirement dollars: ${retirement.toFixed(2)}</h2>
+            <h2>Total Shavings: ${shavings.toFixed(2)}</h2>
+            <h2>Retirement Dollars: ${retirement.toFixed(2)}</h2>
           </div>
         </Card>
         {cards.map(({ id, timeStamp, title, subtitle }) => {
@@ -65,13 +65,20 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
             hours = hours - 12;
           }
           return (
-            <Card key={id}>
+            <Card className="bg-neutral-700 border-none" key={id}>
               <h6>
                 {thisDate.toLocaleDateString()} - {hours}:
                 {zeroPad(thisDate.getMinutes(), 2)} {timeOfDay}
               </h6>
-              <h3>{title}</h3>
-              <h4>{subtitle}</h4>
+              <h3>
+                {<span className="text-orange-400">{title[0]}</span>} +{" "}
+                {title[1]}
+              </h3>
+              <h4>
+                {subtitle[0]} +
+                {<span className="text-green-500">{subtitle[1]}</span>} +
+                {subtitle[2]}
+              </h4>
             </Card>
           );
         })}
@@ -142,8 +149,9 @@ export async function getServerSideProps() {
 
     const businessIndex: number = getRandom(0, numCompanies - 1);
     const business: string = companies.companies[businessIndex];
-    const title: string =
-      "$" + (cents / 100).toString() + ' from purchase at "' + business + '"';
+    let title: string[] = [];
+    title.push("$" + (cents / 100).toFixed(2));
+    title.push(' from purchase at "' + business + '"');
 
     const compounded: number = calcRetirementValue(
       cents / 100,
@@ -153,8 +161,10 @@ export async function getServerSideProps() {
     totalShavings += cents / 100;
     totalRetirementValue += compounded;
 
-    const subtitle: string =
-      "That's $" + compounded.toFixed(2) + " in retirement dollars!";
+    let subtitle: string[] = [];
+    subtitle.push("That's ");
+    subtitle.push("$" + compounded.toFixed(2));
+    subtitle.push(" in retirement dollars!");
 
     cards.push({
       id: uuidv4(),

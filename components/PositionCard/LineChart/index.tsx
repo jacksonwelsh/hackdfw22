@@ -89,8 +89,8 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       {
         label: "Dataset 1",
         data: data,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgb(30, 58, 90)",
+        backgroundColor: "rgba(30, 58, 138, 0.5)",
       },
     ],
   };

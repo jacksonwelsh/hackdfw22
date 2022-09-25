@@ -35,10 +35,10 @@ const Simulator: NextPage<SimulatorProps> = (props) => {
     <main className="flex-col">
       <div className="text-center">
         <FadeInFromTop>
-          <h1 className="text-3xl font-bold mb-0">
-            Feeling lucky?
-            {/* Sometimes things in life are out of your control */}
-          </h1>
+          <h1 className="text-3xl font-bold mb-0">Feeling Lucky?</h1>
+        </FadeInFromTop>
+        <FadeInFromTop>
+          <h2 className="text-lg font-bold mt-0">Explore various life events and experience how they may affect your retirement!</h2>
         </FadeInFromTop>
       </div>
       <div className="grid grid-cols-2 gap-4 my-4 px-10 text-center">
@@ -63,7 +63,7 @@ const Simulator: NextPage<SimulatorProps> = (props) => {
       <div className="mx-10 text-center">
         <FadeInFromTop>
           <h2 className="text-lg font-bold mt-0">
-            See how different choices can affect your savings
+            See how different choices can affect your savings:
             {/* At 25, you may not have much money in savings. If you invest early,
           even a small amount of money can make a difference. In 40 years your
           assets could be worth exponentially more! */}
