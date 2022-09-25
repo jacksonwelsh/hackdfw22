@@ -63,7 +63,7 @@ const Simulator: NextPage<SimulatorProps> = (props) => {
       <div className="mx-10 text-center">
         <FadeInFromTop>
           <h2 className="text-lg font-bold mt-0">
-            See how different choices can affect your savings
+            See how different choices can affect your savings:
             {/* At 25, you may not have much money in savings. If you invest early,
           even a small amount of money can make a difference. In 40 years your
           assets could be worth exponentially more! */}
