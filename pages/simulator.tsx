@@ -41,14 +41,14 @@ const Simulator: NextPage<SimulatorProps> = (props) => {
         {cells.map((cell: SimulatorCell) => {
           return (
             <Card key={cell.id} className="border-2 border-violet-700 bg-gradient-to-tr from-blue-500 to-purple-500 text-stone-900">
-              <h2 onClick={() => onCellClick(savings + cell.cost)}>{cell.name}</h2>
+              <h3 onClick={() => onCellClick(savings + cell.cost)}>{cell.name}</h3>
             </Card>
           )
         })}
       </div>
       <h3 className="text-center">Total Capital:</h3>
-      <h3 className="text-center">Current Savings &rarr; ${savings}</h3>
-      <h3 className="text-center">Retirement Savings &rarr; ${retSavings}</h3>
+      <h3 className="text-center">Current Savings &rarr; {savings.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+      <h3 className="text-center">Retirement Savings &rarr; {retSavings.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
     </main>
   );
 };

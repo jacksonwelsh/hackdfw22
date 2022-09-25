@@ -134,11 +134,11 @@ const Timeline: NextPage = () => {
 
   const health: Health =
     finances.currCash > finances.safetyNet &&
-    finances.currCash < finances.safetyNet * 1.75
+      finances.currCash < finances.safetyNet * 1.75
       ? "ok"
       : finances.currCash > finances.safetyNet * 1.75
-      ? "over"
-      : "under";
+        ? "over"
+        : "under";
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -189,8 +189,8 @@ const Timeline: NextPage = () => {
                   (health === "ok"
                     ? "from-teal-500 via-green-600 to-cyan-500"
                     : health === "over"
-                    ? "from-yellow-500 to-orange-500"
-                    : "from-red-500 to-pink-500")
+                      ? "from-yellow-500 to-orange-500"
+                      : "from-red-500 to-pink-500")
                 }
               >
                 {formatter.format(finances.currCash)}{" "}

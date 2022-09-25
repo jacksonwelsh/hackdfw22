@@ -33,8 +33,8 @@ const Segment: React.FC<SegmentProps> = ({
           {status === "ok"
             ? "Healthy"
             : status === "warn"
-            ? "Warning"
-            : "Danger"}
+              ? "Warning"
+              : "Danger"}
         </Badge>
         {cost && <span className="text-lg">Expected cost: {cost}</span>}
       </h2>
