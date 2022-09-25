@@ -38,6 +38,32 @@ export async function getServerSideProps() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  function getPastDateThisMonth() {
+    const currDate = new Date();
+    const randDay = getRandom(0, currDate.getDay());
+    var randHr: number, randMin: number;
+    if (randDay === currDate.getDay()) {
+      randHr = getRandom(0, currDate.getHours());
+
+      if (randHr === currDate.getHours()) {
+        randMin = getRandom(0, currDate.getMinutes());
+      } else {
+        randMin = getRandom(0, 59);
+      }
+    } else {
+      randHr = getRandom(0, currDate.getHours());
+      randMin = getRandom(0, 59);
+    }
+    const randDate = new Date(
+      currDate.getFullYear(),
+      currDate.getMonth(),
+      randDay,
+      randHr,
+      randMin
+    );
+    console.log(randDate);
+  }
+
   function calcRetirementValue(
     principal: number,
     yearsUntilRetire: number,
@@ -56,7 +82,6 @@ export async function getServerSideProps() {
   let cardTitles: string[] = [];
   let retirementDollars: number[] = [];
   let cardSubtitle: string[] = [];
-
   const cards = [];
 
   const numCompanies = companies.companies.length;
@@ -64,6 +89,7 @@ export async function getServerSideProps() {
     let cents = 0;
     cents = getRandom(0, 99);
     cents += getRandom(0, 30) * 100;
+    const time = getPastDateThisMonth();
 
     dollars.push(cents / 100);
     const businessIndex: number = getRandom(0, numCompanies - 1);
