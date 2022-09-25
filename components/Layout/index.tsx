@@ -1,6 +1,3 @@
-// components/layout.js
-
-import { NextPage } from "next";
 import { ReactNode } from "react";
 import NavBar from "../NavBar";
 

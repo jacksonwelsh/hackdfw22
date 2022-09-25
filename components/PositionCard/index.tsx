@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { AnimateSharedLayout, motion } from "framer-motion";
 import Card from "../Card";
 import LineChart from "./LineChart";
 import { useState } from "react";
