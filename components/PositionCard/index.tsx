@@ -16,8 +16,8 @@ export type PositionCardProps = {
   price: number;
   data: number[];
   insightText: string;
+  stockLogo: React.ReactNode;
 };
-
 
 const PositionCard: React.FC<PositionCardProps> = ({
   symbol,
@@ -28,9 +28,9 @@ const PositionCard: React.FC<PositionCardProps> = ({
   price,
   data,
   insightText,
+  stockLogo,
 }) => {
   const [open, setOpen] = useState(false)
-  const router = useRouter();
 
   const trendColor = percentage > 0 ? "text-green-500" : "text-red-500";
 
@@ -40,22 +40,9 @@ const PositionCard: React.FC<PositionCardProps> = ({
       <div className="flex items-center gap-2 p-2">
         {/* company logo */}
         <div className="flex">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+          {stockLogo}
         </div>
-        {/* ticker, company name, etc  */}
+        {/* ticker, company name, etc */}
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <span className="flex-grow-0">{symbol}</span>
