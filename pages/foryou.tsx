@@ -17,6 +17,7 @@ const positions: PositionCardProps[] = [
     timeframe: "Daily",
     price: 293.51,
     data: labels.map(() => faker.datatype.number({ min: 272.82, max: 284.50 })),
+    insightText: "Tesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great companyTesla is a great company",
   },
   {
     id: uuidv4(),
@@ -27,6 +28,7 @@ const positions: PositionCardProps[] = [
     timeframe: "Daily",
     price: 150.43,
     data: labels.map(() => faker.datatype.number({ min: 148.56, max: 151.47 })),
+    insightText: "Apple is a great company",
   },
   {
     id: uuidv4(),
@@ -37,6 +39,7 @@ const positions: PositionCardProps[] = [
     timeframe: "Daily",
     price: 237.92 ,
     data: labels.map(() => faker.datatype.number({ min: 235.20, max: 241.13 })),
+    insightText: "Microsoft is a great company",
   },
   {
     id: uuidv4(),
@@ -47,6 +50,7 @@ const positions: PositionCardProps[] = [
     timeframe: "Daily",
     price: 113.78,
     data: labels.map(() => faker.datatype.number({ min: 112.06, max: 116.05 })),
+    insightText: "Amazon is a great company",
   },
 ];
 
@@ -54,14 +58,14 @@ const ForYou: NextPage = () => {
   return (
     <div className="flex flex-col items-center py-2 sm:py-12">
       <FadeInFromTop>
-        <h1 className="text-3xl font-bold mb-0">For You Page</h1>
+        <h1 className="text-4xl font-bold mb-0">For You Page</h1>
       </FadeInFromTop>
       <FadeInFromTop>
         <h2 className="text-lg font-bold mt-0">Personalized insights at a glance</h2>
       </FadeInFromTop>
-      <div className="flex flex-col w-full gap-4">
+      <div className="grid grid-cols-1 gap-4 w-full place-items-center">
       {positions.map((position, index) => (
-        <PositionCard {...position} />
+        <PositionCard key={position.id} {...position} />
       ))}
       </div>
     </div>

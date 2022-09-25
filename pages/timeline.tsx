@@ -10,6 +10,7 @@ import Segment, { Status } from "../components/timeline/Segment";
 import Modal from "../components/Modal";
 import Tools, { FinanceState } from "../components/timeline/Tools";
 import { useEffect, useState } from "react";
+import FadeInFromTop from "../components/Animations/FadeInFromTop";
 
 type Goal = {
   title: string;
@@ -183,7 +184,9 @@ const Timeline: NextPage = () => {
         {" "}
       </Modal>
       <main className="container mx-auto px-2 snap-y snap-mandatory">
-        <h1>Your Timeline</h1>
+        <FadeInFromTop>
+          <h1 className="text-4xl font-bold mb-0 text-center">Your Timeline</h1>
+        </FadeInFromTop>
 
         <ol className="relative border-l border-gray-200 dark:border-gray-700 ml-4 sm:ml-0">
           <Segment

@@ -34,7 +34,7 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
     <main className="flex-col">
       <div className="text-center pb-10">
         <FadeInFromTop>
-          <h1 className="text-3xl font-bold">Shavings</h1>
+          <h1 className="text-4xl font-bold">Shavings</h1>
         </FadeInFromTop>
         <FadeInFromTop>
           <h2 className="text-lg font-bold mt-0">
