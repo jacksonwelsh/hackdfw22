@@ -11,9 +11,13 @@ interface ShavingsProps {
     title: string;
     subtitle: string;
   }[];
+  shavings: number;
+  retirement: number;
 }
 
-const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
+const yearsToRetirement = 30;
+
+const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
   function compareDateString(a: string, b: string) {
     const dateA = new Date(a);
     const dateB = new Date(b);
@@ -26,16 +30,23 @@ const Shavings: NextPage<ShavingsProps> = ({ cards }) => {
     <main className="flex-col">
       <div className="text-center pb-10">
         <h1>Shavings</h1>
+        <h3>{yearsToRetirement} years until retirement</h3>
+        <h6>Each time a shaving is made, this number goes down</h6>
       </div>
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
+        <Card key={uuidv4()}>
+          <div className="grid grid-col-1 gap-4 my-4 px-12 break-words sm:grid-col-2 ">
+            <h2>total shavings: ${shavings.toFixed(2)}</h2>
+            <h2>retirement dollars: ${retirement.toFixed(2)}</h2>
+          </div>
+        </Card>
         {cards.map(({ id, timeStamp, title, subtitle }) => (
           <Card key={id}>
             <h6>{timeStamp}</h6>
-            <h2>{title}</h2>
-            <h3>{subtitle}</h3>
+            <h3>{title}</h3>
+            <h4>{subtitle}</h4>
           </Card>
         ))}
-        <Example />
       </div>
     </main>
   );
@@ -75,7 +86,6 @@ export async function getServerSideProps() {
       randMin
     );
     return randDate;
-    console.log(randDate);
   }
 
   function calcRetirementValue(
@@ -89,11 +99,13 @@ export async function getServerSideProps() {
     return value;
   }
 
-  const numEntries: number = 22;
-  const yearsToRetirement: number = 30;
+  const numEntries: number = 11;
   const cards = [];
 
   const numCompanies = companies.companies.length;
+  let totalShavings = 0;
+  let totalRetirementValue = 0;
+
   for (let i = 0; i < numEntries; i++) {
     let cents = 0;
     cents = getRandom(0, 99);
@@ -110,6 +122,8 @@ export async function getServerSideProps() {
       yearsToRetirement,
       0.06
     );
+    totalShavings += cents / 100;
+    totalRetirementValue += compounded;
 
     const subtitle: string =
       "That's $" + compounded.toFixed(2) + " in retirement dollars!";
@@ -125,6 +139,8 @@ export async function getServerSideProps() {
   return {
     props: {
       cards,
+      shavings: totalShavings,
+      retirement: totalRetirementValue,
     }, // will be passed to the page component as props
   };
 }
