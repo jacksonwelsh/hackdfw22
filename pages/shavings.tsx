@@ -50,6 +50,7 @@ const Shavings: NextPage<ShavingsProps> = ({ cards, shavings, retirement }) => {
       <div className="grid grid-cols-1 gap-4 my-4 px-10">
         <Card className="bg-neutral-800 border-none" key={uuidv4()}>
           <div className="grid grid-col-1 gap-4 my-4 px-12 break-words sm:grid-col-2 ">
+            <h6>This Month</h6>
             <h2>Total Shavings: ${shavings.toFixed(2)}</h2>
             <h2>Retirement Dollars: ${retirement.toFixed(2)}</h2>
           </div>
