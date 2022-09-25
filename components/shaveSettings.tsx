@@ -6,8 +6,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 interface ModalProps {
   title: string;
   children: React.ReactNode;
-  type?: "confirmation";
-  onConfirm?: () => void;
+  type?: "settings";
   open: boolean;
   setOpen: (b: boolean) => void;
 }
@@ -43,16 +42,16 @@ export default function Example() {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-black py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">
+                        <Dialog.Title className="text-lg font-medium text-gray-100">
                           Shave Your Spending
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="rounded-md bg-slate-100 text-gray-600 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             onClick={() => setOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
@@ -61,7 +60,9 @@ export default function Example() {
                         </div>
                       </div>
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                    <div className="relative mt-6 flex-row px-4 sm:px-6">
+                      <h1>AAA</h1>
+                      <h1>BBB</h1>
                       {/* Replace with your content */}
                       <div className="absolute inset-0 px-4 sm:px-6">
                         <div
