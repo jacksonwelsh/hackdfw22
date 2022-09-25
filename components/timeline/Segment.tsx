@@ -30,7 +30,7 @@ const Segment: React.FC<SegmentProps> = ({
   const [showBalances, setShow] = useState(false);
 
   return (
-    <li className="mb-24 ml-6 min-h-screen md:min-h-0 snap-always snap-center">
+    <li className="mb-64 ml-6 min-h-fit md:min-h-0 snap-always snap-center">
       <span className="flex absolute -left-4 justify-center items-center w-8 h-8 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900 text-blue-200 fill-current">
         <div className="h-5 w-5">{icon}</div>
       </span>
