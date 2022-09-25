@@ -51,7 +51,7 @@ const Timeline: NextPage = () => {
   const [annualContributionIncrease, setAnnualContributionIncrease] =
     useState(0.03);
 
-  const finances: FinanceState = {
+  const [finances, setFinances] = useState<FinanceState>({
     currInvestments: 25_000,
     currCash: 15000,
     growth,
@@ -63,7 +63,7 @@ const Timeline: NextPage = () => {
     year: 2022,
     birthYear: 2000,
     safetyNet: 6000,
-  };
+  });
 
   const [goals, setGoals] = useState<Goal[]>([
     {
@@ -109,7 +109,8 @@ const Timeline: NextPage = () => {
       const prevAmount =
         i === 0
           ? finances.currInvestments
-          : inner[i - 1].endAmt - inner[i - 1].cost;
+          : inner[i - 1].endAmt -
+            Math.min(inner[i - 1].endAmt, inner[i - 1].cost);
       const startYear = i === 0 ? finances.year : inner[i - 1].goalYear;
 
       const endAmt = calculateGrowth(
@@ -124,7 +125,13 @@ const Timeline: NextPage = () => {
       inner.push({ ...goal, endAmt });
       setCalculated((calculated) => [...calculated, { ...goal, endAmt }]);
     }
-  }, [goals, growth, annualContributionIncrease, annualInvestmentBase]);
+  }, [
+    goals,
+    growth,
+    annualContributionIncrease,
+    annualInvestmentBase,
+    finances,
+  ]);
   console.log({ calculated });
 
   const formatter = Intl.NumberFormat("en-US", {
@@ -144,8 +151,11 @@ const Timeline: NextPage = () => {
 
   const confirmInvestment = () => {
     const amt = finances.currCash - finances.safetyNet * 1.5;
-    finances.currCash -= amt;
-    finances.currInvestments += amt;
+    setFinances((finances) => ({
+      ...finances,
+      currCash: (finances.currCash -= amt),
+      currInvestments: (finances.currInvestments += amt),
+    }));
     setModalOpen(false);
   };
 
@@ -172,6 +182,7 @@ const Timeline: NextPage = () => {
             status="ok"
             title="Today"
             year={new Date().getFullYear()}
+            yearUntil={calculated[0]?.goalYear}
             icon={<ArrowRightCircleIcon />}
           >
             <p>
@@ -229,6 +240,11 @@ const Timeline: NextPage = () => {
                   status={health}
                   title={title}
                   year={goalYear}
+                  yearUntil={
+                    idx < calculated.length - 1
+                      ? calculated[idx + 1].goalYear
+                      : goalYear + 20
+                  }
                   icon={icon}
                   key={idx}
                   cost={formatter.format(cost)}

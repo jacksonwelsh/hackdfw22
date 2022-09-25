@@ -5,6 +5,7 @@ interface SegmentProps {
   title: string;
   icon?: React.ReactNode;
   year: number;
+  yearUntil: number;
   status: "ok" | "warn" | "danger";
   cost?: string;
 }
@@ -15,6 +16,7 @@ const Segment: React.FC<SegmentProps> = ({
   title,
   icon,
   year,
+  yearUntil,
   status,
   cost,
 }) => {
@@ -26,7 +28,7 @@ const Segment: React.FC<SegmentProps> = ({
 
       <h2 className="mb-1 ml-2 mt-6 -translate-y-4">
         <div className="text-sm font-semibold tracking-widest text-gray-300 -mb-1">
-          {year}
+          {year} - {yearUntil}
         </div>
         {title}
         <Badge variant={status}>
